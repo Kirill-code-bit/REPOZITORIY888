@@ -14,10 +14,15 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='my_grade',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True,
+                                           primary_key=True,
+                                           serialize=False,
+                                           verbose_name='ID')),
                 ('subject', models.CharField(max_length=100)),
                 ('name', models.IntegerField()),
-                ('student', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='main.student')),
+                ('student', models.ForeignKey(on_delete=django.db.models.
+                                              deletion.CASCADE,
+                                              to='main.student')),
             ],
         ),
     ]

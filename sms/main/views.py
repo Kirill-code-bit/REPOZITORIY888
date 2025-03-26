@@ -26,7 +26,7 @@ class MainGradeView(View):
             'title': 'Основные оценки'
         }
         return render(request, 'main_grade.html', context)
-    
+
     def post(self, request, *args, **kwargs):
         # Логика для POST-запроса (если нужно обрабатывать формы)
         pass
@@ -51,18 +51,18 @@ def student_grades(request):
     grades = Grade.objects.filter(student=request.user).select_related
     grades = Grade.objects.filter(student=request.user).order_by('-date')
     ('course')
-    
+
     # Группируем оценки по курсам
     courses_grades = {}
     for grade in grades:
         if grade.course not in courses_grades:
             courses_grades[grade.course] = []
         courses_grades[grade.course].append(grade)
-    
+
     context = {
         'courses_grades': courses_grades,
     }
-    
+
     return render(request, 'grades/student_grades.html', context)
 
 
@@ -92,7 +92,7 @@ def add_schedule(request):
         form = ScheduleForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('schedule_list')  # Перенаправление на страницу со списком расписаний
+            return redirect('schedule_list')
     else:
         form = ScheduleForm()
     return render(request, 'add_schedule.html', {'form': form})
@@ -127,7 +127,8 @@ def add_attendance(request):
 
 def attendance_list(request):
     attendances = Attendance.objects.all()
-    return render(request, 'attendance_list.html', {'attendances': attendances})
+    return render(request, 'attendance_list.html', {'attendances':
+                                                    attendances})
 
 
 def home(request):
