@@ -7,7 +7,7 @@
 {% block body %}
 
 <div class="container-fluid w-100" style="margin: 100px 0px;">
-    <h1>Manage Students</h1>
+    <h1>Управление студентами</h1>
     <hr>
 
 
@@ -15,7 +15,7 @@
         <thead>
             <tr>
                 <th>студент id</th>
-                <th>полнео имя</th>
+                <th>полное имя</th>
                 <th>имя отца</th>
                 <th>имя матери</th>
                 <th>дата рождения</th>
@@ -31,17 +31,17 @@
         <tbody>
             {% for student in students %}
             <tr>
-                <td>{{student.stu_id}}</td>
-                <td>{{student.full_name}}</td>
-                <td>{{student.father_name}}</td>
-                <td>{{student.mother_name}}</td>
-                <td>{{student.date_of_birth}}</td>
-                <td>{{student.gender}}</td>
-                <td>{{student.address}}</td>
-                <td>{{student.city}}</td>
-                <td>{{student.email}}</td>
-                <td>{{student.contact_num}}</td>
-                <td>{{student.course}}</td>
+                <td>"№;%:ert</td>
+                <td>Евстрактий</td>
+                <td>Климент Макарович</td>
+                <td>Алла Денисовна</td>
+                <td>2.07.1997</td>
+                <td>male</td>
+                <td>улица </td>
+                <td>Владивосток</td>
+                <td>evst45@gmail.com</td>
+                <td>23413414</td>
+                <td>4</td>
                 <td>
                     <a href="{% url 'delete_student' student.id %}" style="text-decoration: none;">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -68,40 +68,40 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">Update Student's Details</h1>
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">обновить детали студента</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <form action="{% url 'update_student' student.id %}" method="post">
                                 {% csrf_token %}
-                                <input type="text" name="full_name" value="{{student.full_name}}" class="form-control" placeholder="Full Name">
+                                <input type="text" name="full_name" value="Евстрактий" class="form-control" placeholder="Full Name">
                                 <br>
-                                <input type="text" name="f_name" value="{{student.father_name}}" class="form-control" placeholder="Father's Name">
+                                <input type="text" name="f_name" value="Климент Макарович" class="form-control" placeholder="Father's Name">
                                 <br>
-                                <input type="text" name="m_name" value="{{student.mother_name}}" class="form-control" placeholder="Mother's Name">
+                                <input type="text" name="m_name" value="Алла Денисовна" class="form-control" placeholder="Mother's Name">
                                 <br>
                                 <div class="input-group mb-3">
-                                    <label class="input-group-text" for="inputGroupSelect01">Gender</label>
+                                    <label class="input-group-text" for="inputGroupSelect01">Пол</label>
                                     <select class="form-select" name="gender" id="inputGroupSelect01">
-                                      <option selected>{{student.gender}}</option>
-                                      <option value="Male">Male</option>
-                                      <option value="Female">Female</option> 
+                                      <option selected>пол студента</option>
+                                      <option value="Male">мужской</option>
+                                      <option value="Female">женский</option> 
                                     </select>
                                 </div>
                                 <br>
-                                <input type="text" name="address" value="{{student.address}}" class="form-control" placeholder="Permanant Address">
+                                <input type="text" name="address" value="улица" class="form-control" placeholder="Permanant Address">
                                 <br>
-                                <input type="text" name="city" value="{{student.city}}" class="form-control" placeholder="City">
+                                <input type="text" name="city" value="Владивосток" class="form-control" placeholder="City">
                                 <br>
-                                <input type="email" name="stu_email" value="{{student.email}}" placeholder="Email" class="form-control">
+                                <input type="email" name="stu_email" value="evst@45gmail.com" placeholder="Email" class="form-control">
                                 <br>
-                                <input type="tel" name="contact_number" value="{{student.contact_num}}" class="form-control" placeholder="Contact Number">
+                                <input type="tel" name="contact_number" value="35635737" class="form-control" placeholder="Contact Number">
                                 <br>
-                                <small>Current DoB: {{student.date_of_birth}}</small>
-                                <input type="date" name="dob" value="{{student.date_of_birth}}" class="form-control" id="">
+                                <small>текущее : июль 1997</small>
+                                <input type="date" name="dob" value="2.07.1997" class="form-control" id="">
                                 <br>
                                 <div class="input-group mb-3">
-                                    <label class="input-group-text" for="inputGroupSelect01">Select Course</label>
+                                    <label class="input-group-text" for="inputGroupSelect01">выбрать курс</label>
                                     <select class="form-select" name="course" id="inputGroupSelect01">
                                       <option selected>{{student.course}}</option>
                                       <option value="BSC">BSC</option>
@@ -123,15 +123,15 @@
                                 <br><br>
                         
                         
-                                <h4>Login Details</h4>
+                                <h4>детали авторизации</h4>
                                 <hr>
-                                <input type="text" value="{{student.user_name}}" name="stu_user_name" class="form-control" placeholder="Username">
+                                <input type="text" value="{{student.user_name}}" name="stu_user_name" class="form-control" placeholder="имя">
                                 <br>
-                                <input type="password" value="{{student.password}}" name="stu_pwd" class="form-control" placeholder="Password">
+                                <input type="password" value="{{student.password}}" name="stu_pwd" class="form-control" placeholder="пароль">
                                 <br>
                                 
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">закрыть</button>
                                     <input type="submit" class="btn btn-primary" value="Update">
                                 </div>
                             </form>
