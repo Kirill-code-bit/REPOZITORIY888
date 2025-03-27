@@ -64,17 +64,6 @@ class Student(models.Model):
 
 
 class Grade(models.Model):
-    student = models.ForeignKey(Student, on_delete=models.CASCADE)
-    subject = models.CharField(max_length=100)
-    grade = models.DecimalField(max_digits=5, decimal_places=2)
-    date = models.DateField()
-    score = models.IntegerField()
-
-    def __str__(self):
-        return f"{self.student.full_name} - {self.subject}: {self.grade}"
-    
-
-class Grade(models.Model):
     GRADE_CHOICES = [
         ('A', 'Отлично (90-100)'),
         ('B', 'Хорошо (80-89)'),
@@ -82,7 +71,7 @@ class Grade(models.Model):
         ('D', 'Неудовлетворительно (60-69)'),
         ('F', 'Не сдано (0-59)'),
     ]
-    
+
     grade = models.CharField(
         max_length=1,
         choices=GRADE_CHOICES,
