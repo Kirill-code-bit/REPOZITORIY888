@@ -52,6 +52,7 @@ class Student(models.Model):
     mother_name = models.CharField(max_length=100)
     gender = models.CharField(max_length=50, default="Male")
     address = models.CharField(max_length=100)
+    photo = models.ImageField(upload_to="photos/%Y/%m/%d/")
     city = models.CharField(max_length=50)
     email = models.EmailField()
     contact_num = models.IntegerField(default=1234567)
