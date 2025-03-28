@@ -1,5 +1,4 @@
 from django.db import models
-from django.core.validators import MinValueValidator, MaxValueValidator
 
 
 class Item(models.Model):
@@ -8,6 +7,16 @@ class Item(models.Model):
 
     def __str__(self):
         return self.name
+    
+
+class Score(models.Model):
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    date = models.DateField()
+    numeric_score = models.DecimalField(max_digits=5, decimal_places=2)
+    
+    def __str__(self):
+        return f"{self.student} - {self.course}: {self.numeric_score} ({self.date})"
 
 
 class Schedule(models.Model):
@@ -45,23 +54,15 @@ class ContactPage(models.Model):
 
 
 class Student(models.Model):
-    full_name = models.CharField(max_length=100)
-    father_name = models.CharField(max_length=100)
-    mother_name = models.CharField(max_length=100)
-    gender = models.CharField(max_length=50, default="Male")
-    address = models.CharField(max_length=100)
-    city = models.CharField(max_length=50)
-    email = models.EmailField()
-    contact_num = models.IntegerField(default=1234567)
-    date_of_birth = models.DateField()
-    course = models.CharField(max_length=50)
-    stu_id = models.CharField(max_length=50)
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
     user_name = models.CharField(max_length=50)
+    email = models.EmailField(unique=True)
     password = models.CharField(max_length=100)
 
     def __str__(self):
-        return self.full_name
-
+        return f"{self.first_name} {self.last_name}"
+    
 
 class Grade(models.Model):
     GRADE_CHOICES = [
@@ -71,45 +72,12 @@ class Grade(models.Model):
         ('D', 'Неудовлетворительно (60-69)'),
         ('F', 'Не сдано (0-59)'),
     ]
-
+    
     grade = models.CharField(
         max_length=1,
         choices=GRADE_CHOICES,
         verbose_name="Оценка"
     )
-
-
-class mainGrade(models.Model):
-    name = models.CharField(
-        max_length=100, verbose_name="Название оценки",
-        help_text="Введите название оценки/рейтинга"
-    )
-    
-    value = models.DecimalField(
-        max_digits=5, decimal_places=2,
-        validators=[MinValueValidator(0), MaxValueValidator(100)],
-        verbose_name="Значение оценки",
-        help_text="Оценка от 0 до 100"
-    )
-    
-    description = models.TextField(
-        blank=True, null=True,
-        verbose_name="Описание",
-        help_text="Дополнительное описание оценки"
-    )
-
-    class Meta:
-        verbose_name = "Основная оценка"
-        verbose_name_plural = "Основные оценки"
-        ordering = ['-value']  # Сортировка по убыванию оценки
-        
-    # Методы
-    def __str__(self):
-        return f"{self.name}: {self.value}"
-    
-    def is_passing(self):
-        """Проверяет, является ли оценка проходной."""
-        return self.value >= 60
 
 
 class Course(models.Model):
