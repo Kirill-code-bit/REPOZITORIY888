@@ -3,12 +3,11 @@ from django.contrib.auth.decorators import login_required
 from .models import AboutPage, Item, Grade, Schedule, Attendance, ContactPage, Student, Course, Notice, Teacher
 from .forms import AttendanceForm, SearchForm, ScheduleForm, GradeForm
 from django.views import View
-# Create your views here.
 
 
 @login_required(login_url='/login/')
 def main_grade(request):
-    grades = Grade.objects.all()  # Пример запроса к базе данных
+    grades = Grade.objects.all()
     context = {
         'grades': grades,
         'title': 'Основные оценки'
@@ -18,9 +17,7 @@ def main_grade(request):
 
 class MainGradeView(View):
     def get(self, request, *args, **kwargs):
-        # Логика для GET-запроса
-        # Например, получение всех оценок из базы данных
-        grades = Grade.objects.all()  # Если используете модель Grade
+        grades = Grade.objects.all()
         context = {
             'grades': grades,
             'title': 'Основные оценки'
@@ -28,7 +25,6 @@ class MainGradeView(View):
         return render(request, 'main_grade.html', context)
 
     def post(self, request, *args, **kwargs):
-        # Логика для POST-запроса (если нужно обрабатывать формы)
         pass
 
 
@@ -43,27 +39,6 @@ def search(request):
         form = SearchForm()
 
     return render(request, 'search.html', {'form': form, 'results': results})
-
-
-@login_required
-def student_grades(request):
-    # Получаем оценки текущего пользователя
-    grades = Grade.objects.filter(student=request.user).select_related
-    grades = Grade.objects.filter(student=request.user).order_by('-date')
-    ('course')
-
-    # Группируем оценки по курсам
-    courses_grades = {}
-    for grade in grades:
-        if grade.course not in courses_grades:
-            courses_grades[grade.course] = []
-        courses_grades[grade.course].append(grade)
-
-    context = {
-        'courses_grades': courses_grades,
-    }
-
-    return render(request, 'grades/student_grades.html', context)
 
 
 def add_grade(request):
@@ -436,11 +411,11 @@ def studentSettings(request):
                                           ['student_user'])
         data = {'student': student_obj}
         if request.method == 'POST':
-            currentPwd = request.POST['current_pwd']
+            # currentPwd = request.POST['current_pwd']
             new_pwd = request.POST['new_pwd']
             student_obj.password = new_pwd
-            student_obj.save() 
-            return redirect('student_dashboard')      
+            student_obj.save()
+            return redirect('student_dashboard')
         return render(request, "student/student_settings.html", data)
     else:
         return redirect('student_login')
