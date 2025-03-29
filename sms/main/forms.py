@@ -1,5 +1,5 @@
 from django import forms
-from .models import Attendance, Score, Course, Schedule, Grade
+from .models import Attendance, Course, Schedule, GradeForm
 
 
 class SearchForm(forms.Form):
@@ -11,21 +11,6 @@ class AttendanceForm(forms.ModelForm):
     class Meta:
         model = Attendance
         fields = ['student', 'date', 'is_present']
-
-
-class GradeForm(forms.ModelForm):
-    class Meta:
-        model = Grade
-        fields = ['student', 'course', 'numeric_score', 'date']
-
-
-class ScoreForm(forms.ModelForm):
-    class Meta:
-        model = Score
-        fields = ['student', 'course', 'date', 'numeric_score']
-        widgets = {
-            'date': forms.DateInput(attrs={'type': 'date'}),
-        }
 
 
 class ScheduleForm(forms.ModelForm):

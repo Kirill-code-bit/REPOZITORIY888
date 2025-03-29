@@ -1,97 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .models import AboutPage, Item, Grade, Score, Schedule, Attendance, ContactPage, Student, Course, Notice, Teacher
-from django.views.generic import ListView
-from django.db.models import Q
-from rest_framework import viewsets
-from .serializers import CourseSerializer, StudentSerializer, ScoreSerializer
-from .forms import AttendanceForm, ScoreForm, SearchForm, ScheduleForm, GradeForm
+from .models import AboutPage, Item, Grade, Schedule, Attendance, ContactPage, Student, Course, Notice, Teacher
+from .forms import AttendanceForm, SearchForm, ScheduleForm, GradeForm
 from django.views import View
-
-
-def add_score(request):
-    if request.method == 'POST':
-        form = ScoreForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('score_list')  # Перенаправление на список оценок
-    else:
-        form = ScoreForm()
-    
-    return render(request, 'scores/add_score.html', {'form': form})
-
-
-class CourseViewSet(viewsets.ModelViewSet):
-    queryset = Course.objects.all()
-    serializer_class = CourseSerializer
-
-
-class StudentViewSet(viewsets.ModelViewSet):
-    queryset = Student.objects.all()
-    serializer_class = StudentSerializer
-
-
-class ScoreViewSet(viewsets.ModelViewSet):
-    queryset = Score.objects.select_related('student', 'course')
-    serializer_class = ScoreSerializer
-
-    def get_queryset(self):
-        queryset = super().get_queryset()
- 
-        # Фильтрация параметрами запроса
-        course_id = self.request.query_params.get('course')
-        student_id = self.request.query_params.get('student')
-        date_from = self.request.query_params.get('date_from')
-        date_to = self.request.query_params.get('date_to')
-    
-        if course_id:
-            queryset = queryset.filter(course_id=course_id)
-        if student_id:
-            queryset = queryset.filter(student_id=student_id)
-        if date_from:
-            queryset = queryset.filter(date__gte=date_from)
-        if date_to:
-            queryset = queryset.filter(date__lte=date_to)
-            
-        return queryset
-    
-
-class ScoreListView(ListView):
-    model = Score
-    template_name = 'scores/score_list.html'
-    context_object_name = 'scores'
-    paginate_by = 20
-    
-
-def get_queryset(self):
-    queryset = super().get_queryset()
-    
-    # Фильтрация по курсу
-    course_id = self.request.GET.get('course')
-    if course_id:
-        queryset = queryset.filter(course_id=course_id)
-        
-    # Фильтрация по студенту
-    student_id = self.request.GET.get('student')
-    if student_id:
-        queryset = queryset.filter(student_id=student_id)
-        
-    # Фильтрация по дате
-    date_from = self.request.GET.get('date_from')
-    date_to = self.request.GET.get('date_to')
-    if date_from:
-        queryset = queryset.filter(date__gte=date_from)
-    if date_to:
-        queryset = queryset.filter(date__lte=date_to)
-        
-    return queryset.select_related('student', 'course').order_by('-date')
-
-
-def get_context_data(self, **kwargs):
-    context = super().get_context_data(**kwargs)
-    context['courses'] = Course.objects.all()
-    context['students'] = Student.objects.all()
-    return context
 
 
 @login_required(login_url='/login/')
@@ -128,26 +39,6 @@ def search(request):
         form = SearchForm()
 
     return render(request, 'search.html', {'form': form, 'results': results})
-
-
-@login_required
-def student_grades(request):
-    grades = Grade.objects.filter(student=request.user).select_related
-    grades = Grade.objects.filter(student=request.user).order_by('-date')
-    ('course')
-
-    # Группируем оценки по курсам
-    courses_grades = {}
-    for grade in grades:
-        if grade.course not in courses_grades:
-            courses_grades[grade.course] = []
-        courses_grades[grade.course].append(grade)
-
-    context = {
-        'courses_grades': courses_grades,
-    }
-
-    return render(request, 'grades/student_grades.html', context)
 
 
 def add_grade(request):
