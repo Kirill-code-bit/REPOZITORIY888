@@ -41,24 +41,6 @@ def search(request):
     return render(request, 'search.html', {'form': form, 'results': results})
 
 
-@login_required
-def student_grades(request):
-    grades = Grade.objects.filter(student=request.user).select_related
-    grades = Grade.objects.filter(student=request.user).order_by('-date')
-    ('course')
-    courses_grades = {}
-    for grade in grades:
-        if grade.course not in courses_grades:
-            courses_grades[grade.course] = []
-        courses_grades[grade.course].append(grade)
-
-    context = {
-        'courses_grades': courses_grades,
-    }
-
-    return render(request, 'grades/student_grades.html', context)
-
-
 def add_grade(request):
     if request.method == 'POST':
         form = GradeForm(request.POST)
@@ -120,8 +102,8 @@ def add_attendance(request):
 
 def attendance_list(request):
     attendances = Attendance.objects.all()
-    return render(request, 'attendance_list.html',
-                  {'attendances': attendances})
+    return render(request, 'attendance_list.html', {'attendances':
+                                                    attendances})
 
 
 def home(request):

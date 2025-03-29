@@ -1,11 +1,22 @@
 from django.urls import path
 from . import views
-from .views import MainGradeView, main_grade
+from .views import ScoreListView, add_score
+from rest_framework.routers import DefaultRouter
+from .views import MainGradeView, main_grade, CourseViewSet, StudentViewSet, ScoreViewSet
+
+
+router = DefaultRouter()
+router.register(r'courses', CourseViewSet)
+router.register(r'students', StudentViewSet)
+router.register(r'scores', ScoreViewSet)
 
 urlpatterns = [
     path('', views.home, name="home"),
     path('', views.schedule_list, name='schedule_list'),
     path('about/', views.about, name="about"),
+    path('scores/', ScoreListView.as_view(), name='score_list'),
+    path('scores/add/', add_score, name='add_score'),
+    path('api/', include(router.urls)),
     path('search/', views.search, name='search'),
     path('add-grade/', views.add_grade, name='add_grade'),
     path('grades/', views.grades_list, name='grades_list'),

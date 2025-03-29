@@ -22,14 +22,14 @@
     }
 </style>
     <div class="container my-5 w-50">
-        <h1 class="text-center">логин админа</h1>
+        <h1 class="text-center">Логин админа</h1>
         <form action="{% url 'admin_login' %}" method="post">
             {% csrf_token %}
-            <input type="email" placeholder="Email" class="form-control" name="email">
+            <input type="email" placeholder="Электронная почта" class="form-control" name="email" required>
             <br>
-            <input type="password" placeholder="Password" class="form-control" name="pwd">
+            <input type="password" placeholder="Пароль" class="form-control" name="pwd" required>
             <br>
-            <input type="submit" class="btn btn-primary width: 45% form-control" style="width:30%; margin-left: 360px;" value="Login">
+            <input type="submit" class="btn btn-primary width: 45% form-control" style="width:30%; margin-left: 360px;" value="Авторизоваться" required>
         </form>
     </div>
 {% endblock %}

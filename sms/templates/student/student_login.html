@@ -29,11 +29,11 @@
         
         <form action="{% url 'student_login' %}" method="post">
             {% csrf_token %}
-            <input type="text" class="form-control" placeholder="Username" name="userName">
+            <input type="text" class="form-control" placeholder="Ваше имя" name="userName" required>
             <br>
-            <input type="password" class="form-control" placeholder="Password" name="stuPwd">
+            <input type="password" class="form-control" placeholder="Пароль" name="stuPwd" required>
             <br>
-            <input type="submit" value="Login" class="btn btn-primary form-control" style="width: 30%; margin-left: 360px;">
+            <input type="submit" value="Авторизоваться" class="btn btn-primary form-control" style="width: 30%; margin-left: 360px;" required>
         </form>
     </div>
 {% endblock %}

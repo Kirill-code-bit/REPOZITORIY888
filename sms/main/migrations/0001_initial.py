@@ -16,14 +16,19 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='AboutPage',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True,
+                                           primary_key=True, serialize=False,
+                                           verbose_name='ID')),
                 ('about', models.TextField()),
             ],
         ),
         migrations.CreateModel(
             name='ContactPage',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True,
+                                           primary_key=True,
+                                           serialize=False,
+                                           verbose_name='ID')),
                 ('address', models.TextField()),
                 ('contact_num', models.IntegerField()),
                 ('email', models.EmailField(max_length=254)),
@@ -32,7 +37,9 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Course',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True,
+                                           primary_key=True, serialize=False,
+                                           verbose_name='ID')),
                 ('name', models.CharField(max_length=100)),
                 ('code', models.CharField(max_length=20, unique=True)),
             ],
@@ -40,7 +47,9 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Item',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True,
+                                           primary_key=True, serialize=False,
+                                           verbose_name='ID')),
                 ('name', models.CharField(max_length=100)),
                 ('description', models.TextField()),
             ],
@@ -48,7 +57,9 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Notice',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True,
+                                           primary_key=True, serialize=False,
+                                           verbose_name='ID')),
                 ('title', models.CharField(max_length=200)),
                 ('content', models.TextField()),
                 ('isPublic', models.BooleanField(default=False)),
@@ -57,7 +68,9 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Post',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True,
+                                           primary_key=True, serialize=False,
+                                           verbose_name='ID')),
                 ('title', models.CharField(max_length=200)),
                 ('content', models.TextField()),
             ],
@@ -65,7 +78,9 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Schedule',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True,
+                                           primary_key=True, serialize=False,
+                                           verbose_name='ID')),
                 ('title', models.CharField(max_length=200)),
                 ('description', models.TextField()),
                 ('start_time', models.DateTimeField()),
@@ -75,7 +90,9 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Student',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True,
+                                           primary_key=True, serialize=False,
+                                           verbose_name='ID')),
                 ('full_name', models.CharField(max_length=100)),
                 ('father_name', models.CharField(max_length=100)),
                 ('mother_name', models.CharField(max_length=100)),
@@ -94,7 +111,9 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Teacher',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True,
+                                           primary_key=True, serialize=False,
+                                           verbose_name='ID')),
                 ('full_name', models.CharField(max_length=100)),
                 ('gender', models.CharField(max_length=50)),
                 ('email', models.EmailField(max_length=254)),
@@ -105,12 +124,27 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Grade',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True,
+                                           primary_key=True, serialize=False,
+                                           verbose_name='ID')),
                 ('date', models.DateField()),
-                ('numeric_score', models.DecimalField(decimal_places=2, max_digits=5, validators=[django.core.validators.MinValueValidator(0), django.core.validators.MaxValueValidator(100)])),
-                ('letter_grade', models.CharField(blank=True, choices=[('A', 'Отлично (90-100)'), ('B', 'Хорошо (80-89)'), ('C', 'Удовлетворительно (70-79)'), ('D', 'Неудовлетворительно (60-69)'), ('F', 'Не сдано (0-59)')], max_length=1)),
-                ('course', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='main.course')),
-                ('student', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='main.student')),
+                ('numeric_score',
+                 models.DecimalField(decimal_places=2, max_digits=5,
+                                     validators=[django.core.validators.
+                                                 MinValueValidator(0),
+                                                 django.core.validators.
+                                                 MaxValueValidator(100)])),
+                ('letter_grade',
+                 models.CharField(blank=True,
+                                  choices=[('A', 'Отлично (90-100)'),
+                                           ('B', 'Хорошо (80-89)'),
+                                           ('C', 'Удовлетворительно (70-79)'), ('D', 'Неудовлетворительно (60-69)'), ('F', 'Не сдано (0-59)')], max_length=1)),
+                ('course', 
+                 models.ForeignKey(on_delete=django.db.models.deletion.
+                                   CASCADE, to='main.course')),
+                ('student', 
+                 models.ForeignKey(on_delete=django.db.models.
+                                   deletion.CASCADE, to='main.student')),
             ],
             options={
                 'ordering': ['-date'],
@@ -122,8 +156,12 @@ class Migration(migrations.Migration):
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('date', models.DateField()),
                 ('is_present', models.BooleanField(default=False)),
-                ('course', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='main.course')),
-                ('student', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='main.student')),
+                ('course', models.ForeignKey(on_delete=django.db.models.
+                                             deletion.CASCADE,
+                                             to='main.course')),
+                ('student', models.ForeignKey(on_delete=django.db.models.
+                                              deletion.CASCADE, 
+                                              to='main.student')),
             ],
         ),
     ]

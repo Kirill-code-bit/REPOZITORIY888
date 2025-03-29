@@ -1,5 +1,5 @@
 from django.db import models
-from django.core.validators import MinValueValidator, MaxValueValidator
+from d
 
 
 class Item(models.Model):
@@ -63,6 +63,16 @@ class Student(models.Model):
         return self.full_name
 
 
+class Grade(models.Model):
+    GRADE_CHOICES = [
+        ('A', 'Отлично (90-100)'),
+        ('B', 'Хорошо (80-89)'),
+        ('C', 'Удовлетворительно (70-79)'),
+        ('D', 'Неудовлетворительно (60-69)'),
+        ('F', 'Не сдано (0-59)'),
+    ]
+
+
 class Course(models.Model):
     COURSE_TYPES = [
         ('lecture', 'Лекция'),
@@ -79,6 +89,7 @@ class Course(models.Model):
         choices=COURSE_TYPES,
         default='lecture'
     )
+
 
     def __str__(self):
         return f"{self.code}: {self.name}"
