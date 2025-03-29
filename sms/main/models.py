@@ -91,6 +91,54 @@ class Course(models.Model):
     )
 
 
+    def __str__(self):
+        return f"{self.code}: {self.name}"
+
+
+class Grade(models.Model):
+    GRADE_CHOICES = [
+        ('A', 'Отлично (90-100)'),
+        ('B', 'Хорошо (80-89)'),
+        ('C', 'Удовлетворительно (70-79)'),
+        ('D', 'Неудовлетворительно (60-69)'),
+        ('F', 'Не сдано (0-59)'),
+    ]
+
+    student = models.ForeignKey('Student', on_delete=models.CASCADE)
+    course = models.ForeignKey('Course', on_delete=models.CASCADE)
+    date = models.DateField()
+    numeric_score = models.DecimalField(
+        max_digits=5,
+        decimal_places=2,
+        validators=[MinValueValidator(0), MaxValueValidator(100)]
+    )
+    letter_grade = models.CharField(
+        max_length=1,
+        choices=GRADE_CHOICES,
+        blank=True
+    )
+
+    class Meta:
+        ordering = ['-date']
+
+    def __str__(self):
+        return f"{self.student} - {self.course}: {self.letter_grade}"
+
+    def save(self, *args, **kwargs):
+        if not self.letter_grade:
+            if self.numeric_score >= 90:
+                self.letter_grade = 'A'
+            elif self.numeric_score >= 80:
+                self.letter_grade = 'B'
+            elif self.numeric_score >= 70:
+                self.letter_grade = 'C'
+            elif self.numeric_score >= 60:
+                self.letter_grade = 'D'
+            else:
+                self.letter_grade = 'F'
+        super().save(*args, **kwargs)
+
+
 class Attendance(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
